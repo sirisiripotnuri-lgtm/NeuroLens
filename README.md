@@ -286,54 +286,6 @@ NeuroLens successfully processes uploaded images and returns well-structured, ac
 
 ---
 
-## 🌐 Deployment
-
-### Deploy to Railway *(Recommended)*
-
-1. Push your project to a **GitHub repository**
-2. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub**
-3. Select your repository and let Railway detect Node.js automatically
-4. In the Railway dashboard, go to **Variables** and add:
-
-```
-GEMINI_API_KEY = your_api_key_here
-```
-
-5. Ensure your `server.js` uses the dynamic `PORT` environment variable:
-
-```js
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-  console.log(`NeuroLens is running at http://localhost:${PORT}`);
-});
-```
-
-6. Click **Deploy** — Railway will assign a public URL automatically.
-
----
-
-### Deploy to Render
-
-1. Go to [render.com](https://render.com) → **New Web Service**
-2. Connect your GitHub repository
-3. Set the following:
-   - **Build Command:** *(leave empty)*
-   - **Start Command:** `node server.js`
-4. Under **Environment**, add:
-   ```
-   GEMINI_API_KEY = your_api_key_here
-   ```
-5. Click **Create Web Service**
-
----
-
-### Deploy to Vercel
-
-> Vercel is optimized for serverless functions. For a persistent Node.js `http` server, **Railway or Render is recommended** over Vercel.
-
----
-
 ## 🔮 Future Improvements
 
 | Priority | Feature |
@@ -348,6 +300,9 @@ server.listen(PORT, () => {
 | 🔷 Low | **Confidence score** or structured JSON output option |
 
 ---
+## Deployment:
+
+Live Deployment: https://neurolens-ctry.onrender.com/
 
 ## 📄 License
 

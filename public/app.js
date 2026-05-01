@@ -2,8 +2,6 @@ const imageInput = document.querySelector("#imageInput");
 const dropZone = document.querySelector("#dropZone");
 const previewWrap = document.querySelector("#previewWrap");
 const imagePreview = document.querySelector("#imagePreview");
-const apiKeyInput = document.querySelector("#apiKeyInput");
-const modelInput = document.querySelector("#modelInput");
 const analyzeButton = document.querySelector("#analyzeButton");
 const copyButton = document.querySelector("#copyButton");
 const resultCard = document.querySelector("#resultCard");
@@ -12,15 +10,13 @@ const statusPill = document.querySelector("#statusPill");
 let imageDataUrl = "";
 let currentAnalysis = "";
 
-apiKeyInput.value = localStorage.getItem("gemini_api_key") || "";
-
 function setStatus(text, state = "") {
   statusPill.textContent = text;
   statusPill.className = `status-pill ${state}`.trim();
 }
 
 function updateAnalyzeButton() {
-  analyzeButton.disabled = !imageDataUrl || !apiKeyInput.value.trim();
+  analyzeButton.disabled = !imageDataUrl;
 }
 
 function formatAnalysis(text) {
@@ -85,11 +81,6 @@ imageInput.addEventListener("change", () => {
   handleFile(imageInput.files[0]).catch((error) => showError(error.message));
 });
 
-apiKeyInput.addEventListener("input", () => {
-  localStorage.setItem("gemini_api_key", apiKeyInput.value.trim());
-  updateAnalyzeButton();
-});
-
 dropZone.addEventListener("dragover", (event) => {
   event.preventDefault();
   dropZone.classList.add("is-dragging");
@@ -118,9 +109,7 @@ analyzeButton.addEventListener("click", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        imageDataUrl,
-        apiKey: apiKeyInput.value.trim(),
-        model: modelInput.value
+        imageDataUrl
       })
     });
 

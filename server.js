@@ -159,5 +159,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, "0.0.0.0", () => {
-  console.log(`NeuroLens is running on port ${PORT}`);
+  console.log(`NeuroLens is running at http://localhost:${PORT}`);
 });

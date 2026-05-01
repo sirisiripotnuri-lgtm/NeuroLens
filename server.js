@@ -5,6 +5,7 @@ const path = require("path");
 const PORT = Number(process.env.PORT || 3000);
 const PUBLIC_DIR = path.join(__dirname, "public");
 const MAX_BODY_SIZE = 55 * 1024 * 1024;
+const GEMINI_MODEL = "gemini-2.5-flash";
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -81,11 +82,11 @@ function serveStatic(req, res) {
 
 async function analyzeImage(req, res) {
   try {
-    const { imageDataUrl, apiKey, model = "gemini-2.5-flash" } = await readJsonBody(req);
-    const key = (apiKey || process.env.GEMINI_API_KEY || "").trim();
+    const { imageDataUrl } = await readJsonBody(req);
+    const key = (process.env.GEMINI_API_KEY || "").trim();
 
     if (!key) {
-      sendJson(res, 400, { error: "Please enter a Gemini API key or set GEMINI_API_KEY." });
+      sendJson(res, 500, { error: "Gemini API key is not configured on the server." });
       return;
     }
 
@@ -97,7 +98,7 @@ async function analyzeImage(req, res) {
     }
 
     const [, mimeType, base64Image] = imageMatch;
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
     const geminiResponse = await fetch(geminiUrl, {
       method: "POST",

@@ -157,6 +157,6 @@ const server = http.createServer((req, res) => {
   res.end("Method not allowed");
 });
 
-server.listen(PORT, "127.0.0.1", () => {
-  console.log(`NeuroLens is running at http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`NeuroLens is running on port ${PORT}`);
 });
